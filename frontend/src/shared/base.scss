@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap%27');
+
+:root {
+     font-family: 'Roboto';
+     font-size: 16px;
+     font-weight: 400;
+}
+
+#root {
+     max-width: 1400px;
+     width: 100%;
+     margin: 0 auto;
+}
+
+.slick-slider {
+     text-align: center;
+}
+
+.slick-slide img {
+     display: inline-block;
+}

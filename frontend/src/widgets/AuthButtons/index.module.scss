@@ -1,0 +1,16 @@
+.buttons {
+     font-family: 'Roboto';
+     display: flex;
+     align-items: center;
+
+     .login {
+          color: #333;
+          text-decoration: none;
+          padding: 20px;
+          margin-right: 20px;
+          font-weight: 400;
+          font-size: 20px;
+          line-height: 23px;
+          color: #000000;
+     }
+}

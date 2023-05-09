@@ -1,0 +1,35 @@
+.wrapper {
+     width: 1162px;
+     height: 523px;
+     background: #4540DB;
+     border-radius: 20px;
+     margin: 100px auto;
+     display: flex;
+
+     .content {
+          margin-top: 60px;
+          width: 400px;
+
+          
+          .title {
+               font-size: 40px;
+               line-height: 47px;
+               color: white
+          }
+          
+          .link {
+               padding: 15px;
+               border-radius: 20px;
+               background-color: white;
+               color: #4540DB;
+               text-decoration: none;
+          }
+
+          .description {
+               font-size: 18px;
+               font-weight: 700;
+               margin: 50px 0;
+               color: white;
+          }
+     }
+}

@@ -1,0 +1,13 @@
+.wrapper {
+     width: 800px;
+     margin: 0 auto;
+     >h2 {
+          font-size: 60px;
+          text-align: center;
+          margin: 20px 0;
+
+          >span {
+               color: #4540DB;
+          }
+     }
+}

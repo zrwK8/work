@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  vacancies:
+    build: .
+    restart: always
+    hostname: vacancies
+    ports:
+      - 3000:3000
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - POSTGRES_HOST=database
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_USERNAME=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+    networks:
+      - backend
+    links:
+      - database
+  database:
+    image: 'postgres:latest'
+    restart: always
+    environment:
+      - POSTGRES_USERNAME=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432:5432
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    name: infrastructure

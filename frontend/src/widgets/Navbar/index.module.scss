@@ -1,0 +1,31 @@
+.navbar {
+     display: flex;
+     justify-content: space-around;
+     align-items: center;
+     padding: 20px;
+
+         
+     .list {
+          display: flex;
+          align-items: center;
+   
+          li {
+               padding: 20px;
+               margin-right: 20px;
+               font-style: normal;
+               font-weight: 400;
+               font-size: 20px;
+               line-height: 23px;
+               color: #000000;
+
+   
+               a {
+                    color: #333;
+                    text-decoration: none;
+   
+               }
+          }
+     }
+ 
+}
+
