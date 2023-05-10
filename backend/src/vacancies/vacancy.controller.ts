@@ -10,36 +10,36 @@ import { UserRole } from '../interfaces/enums/role.enum';
 
 @Controller('vacancies')
 export class VacancyController {
-     constructor(private readonly vacancyService: VacancyService) {}
+	constructor(private readonly vacancyService: VacancyService) {}
 
-     @Get('/')
-     public async getVacancies(): Promise<Vacancies[]> {
-          return await this.vacancyService.getVacancies();
-     }
+	@Get('/')
+	public async getVacancies(): Promise<Vacancies[]> {
+		return await this.vacancyService.getVacancies();
+	}
 
-     @Get('/:id')
-     public async getVacancy(@Param('id') id: number): Promise<Vacancies> {
-          return await this.vacancyService.getVacancy(id);
-     }
+	@Get('/:id')
+	public async getVacancy(@Param('id') id: number): Promise<Vacancies> {
+		return await this.vacancyService.getVacancy(id);
+	}
 
-     @Post('/create-vacancy')
-     @UseGuards(JwtAuthGuard, RolesGuard)
-     @Roles(UserRole.Superadmin, UserRole.Admin, UserRole.Employer)
-     public async createVacancy(@Body() vacanciesDto: CreateVacancyDto): Promise<CreateVacancyDto> {
-          return await this.vacancyService.createVacancy(vacanciesDto);
-     }
+	@Post('/create-vacancy')
+	@UseGuards(JwtAuthGuard, RolesGuard)
+	@Roles(UserRole.Superadmin, UserRole.Admin, UserRole.Employer)
+	public async createVacancy(@Body() vacanciesDto: CreateVacancyDto): Promise<CreateVacancyDto> {
+		return await this.vacancyService.createVacancy(vacanciesDto);
+	}
 
-     @Post('/update-vacancy')
-     @UseGuards(JwtAuthGuard, RolesGuard)
-     @Roles(UserRole.Superadmin, UserRole.Admin, UserRole.Employer)
-     public async updateVacancy(@Body() vacanciesDto: UpdateVacancyDto): Promise<UpdateResult> {
-          return await this.vacancyService.updateVacancy(vacanciesDto.id, vacanciesDto);
-     }
+	@Post('/update-vacancy')
+	@UseGuards(JwtAuthGuard, RolesGuard)
+	@Roles(UserRole.Superadmin, UserRole.Admin, UserRole.Employer)
+	public async updateVacancy(@Body() vacanciesDto: UpdateVacancyDto): Promise<UpdateResult> {
+		return await this.vacancyService.updateVacancy(vacanciesDto.id, vacanciesDto);
+	}
 
-     @Delete('/delete-vacancy')
-     @UseGuards(JwtAuthGuard, RolesGuard)
-     @Roles(UserRole.Superadmin, UserRole.Admin, UserRole.Employer)
-     public async deleteVacancy(id: number): Promise<DeleteResult> {
-          return await this.vacancyService.deleteVacancy(id);
-     }
+	@Delete('/delete-vacancy')
+	@UseGuards(JwtAuthGuard, RolesGuard)
+	@Roles(UserRole.Superadmin, UserRole.Admin, UserRole.Employer)
+	public async deleteVacancy(id: number): Promise<DeleteResult> {
+		return await this.vacancyService.deleteVacancy(id);
+	}
 }

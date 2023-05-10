@@ -2,33 +2,27 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Vacancies extends BaseEntity {
-     @PrimaryGeneratedColumn()
-     id: number;
+	@PrimaryGeneratedColumn()
+	id: number;
 
-     @Column()
-     image: string;
+	@Column()
+	image: string;
 
-     @Column()
-     nameSurname: string;
+	@Column()
+	nameSurname: string;
 
-     @Column()
-     age: number;
+	@Column()
+	age: number;
 
-     @Column()
-     position: string;
+	@Column()
+	position: string;
 
-     @Column()
-     occupying: string;
+	@Column()
+	occupying: string;
 
-     @Column()
-     description: string;
+	@Column()
+	description: string;
 
-     @Column()
-     salary: number;
+	@Column()
+	salary: number;
 }
-
-
-
-
-
-

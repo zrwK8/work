@@ -10,16 +10,16 @@ import { Users } from '../interfaces/entities/Users';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
-     imports: [
-          ConfigModule.forRoot(),
-          TypeOrmModule.forFeature([Users]),
-          JwtModule.registerAsync({
-                    useFactory: JWTConfig,
-                    inject: [ConfigService],
-                    imports: [ConfigModule],
-          }),
-     ],
+	imports: [
+		ConfigModule.forRoot(),
+		TypeOrmModule.forFeature([Users]),
+		JwtModule.registerAsync({
+			useFactory: JWTConfig,
+			inject: [ConfigService],
+			imports: [ConfigModule],
+		}),
+	],
 	providers: [AuthService, CryptoConfig, JwtStrategy, ConfigService],
-     controllers: [AuthController],
+	controllers: [AuthController],
 })
 export class AuthModule {}

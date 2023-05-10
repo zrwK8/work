@@ -1,21 +1,21 @@
 export class CreateVacancyDto {
-     jobPosition: string;
+	jobPosition: string;
 
-     salary?: number;
+	salary?: number;
 
-     experience: number;
+	experience: number;
 
-     description: string;
+	description: string;
 }
 
 export class UpdateVacancyDto {
-     id: number;
+	id: number;
 
-     jobPosition: string;
+	jobPosition: string;
 
-     salary?: number;
+	salary?: number;
 
-     experience: number;
+	experience: number;
 
-     description: string;
+	description: string;
 }

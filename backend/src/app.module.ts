@@ -7,16 +7,16 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
-     imports: [
-          ConfigModule.forRoot(),
-          VacancyModule,
-          AuthModule,
-          UsersModule,
-          TypeOrmModule.forRootAsync({
-               imports: [ConfigModule],
-               inject: [ConfigService],
-               useClass: TypeOrmConfig,
-          }),
-     ],
+	imports: [
+		ConfigModule.forRoot(),
+		VacancyModule,
+		AuthModule,
+		UsersModule,
+		TypeOrmModule.forRootAsync({
+			imports: [ConfigModule],
+			inject: [ConfigService],
+			useClass: TypeOrmConfig,
+		}),
+	],
 })
 export class AppModule {}

@@ -1,4 +1,4 @@
 export class UsersDto {
-     id: number;
-     role: string;
+	id: number;
+	role: string;
 }

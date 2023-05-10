@@ -6,28 +6,28 @@ import { Vacancies } from '../interfaces/entities/Vacancies';
 
 @Injectable()
 export class VacancyService {
-     constructor(
-          @InjectRepository(Vacancies)
-          private readonly vacanciesRepository: Repository<Vacancies>,
-     ) {}
+	constructor(
+		@InjectRepository(Vacancies)
+		private readonly vacanciesRepository: Repository<Vacancies>,
+	) {}
 
-     public async getVacancies(): Promise<Vacancies[]> {
-          return await this.vacanciesRepository.find();
-     }
+	public async getVacancies(): Promise<Vacancies[]> {
+		return await this.vacanciesRepository.find();
+	}
 
-     public async getVacancy(id: number): Promise<Vacancies> {
-          return await this.vacanciesRepository.findOneBy({ id });
-     }
+	public async getVacancy(id: number): Promise<Vacancies> {
+		return await this.vacanciesRepository.findOneBy({ id });
+	}
 
-     public async createVacancy(vacancy: CreateVacancyDto): Promise<CreateVacancyDto> {
-          return await this.vacanciesRepository.save(vacancy);
-     }
+	public async createVacancy(vacancy: CreateVacancyDto): Promise<CreateVacancyDto> {
+		return await this.vacanciesRepository.save(vacancy);
+	}
 
-     public async updateVacancy(id: number, vacancy: UpdateVacancyDto): Promise<UpdateResult> {
-          return await this.vacanciesRepository.update(id, vacancy);
-     }
+	public async updateVacancy(id: number, vacancy: UpdateVacancyDto): Promise<UpdateResult> {
+		return await this.vacanciesRepository.update(id, vacancy);
+	}
 
-     public async deleteVacancy(id: number): Promise<DeleteResult> {
-          return await this.vacanciesRepository.delete(id);
-     }
+	public async deleteVacancy(id: number): Promise<DeleteResult> {
+		return await this.vacanciesRepository.delete(id);
+	}
 }
