@@ -8,7 +8,7 @@ const AuthButtons: FC = () => {
     <div className={styles.buttons}>
       <Link to="/login" className={styles.login}>Авторизация</Link>
 
-      <Link to="/register-now">
+      <Link to="/register">
         <ButtonLink text="Регистрация" />
       </Link>
     </div>

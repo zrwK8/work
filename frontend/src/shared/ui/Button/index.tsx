@@ -2,7 +2,7 @@ import { FC } from "react";
 import styles from "./index.module.scss";
 
 interface ButtonProps {
-  onClick: () => void;
+  onClick: (event: any) => void;
   text: string;
 }
 

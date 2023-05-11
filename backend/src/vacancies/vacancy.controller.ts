@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Post, UseGuards } from '@nestjs/common';
 import { VacancyService } from './vacancy.service';
 import { CreateVacancyDto, UpdateVacancyDto } from '../interfaces/dto/vacancies.dto';
 import { Vacancies } from '../interfaces/entities/Vacancies';
@@ -14,7 +14,12 @@ export class VacancyController {
 
 	@Get('/')
 	public async getVacancies(): Promise<Vacancies[]> {
-		return await this.vacancyService.getVacancies();
+		try {
+
+			return await this.vacancyService.getVacancies();
+		} catch (error) {
+			throw new NotFoundException('No vacancies found');
+		}
 	}
 
 	@Get('/:id')

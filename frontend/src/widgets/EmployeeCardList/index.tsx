@@ -7,6 +7,7 @@ import Button from "../../shared/ui/Button";
 const EmployeeCardList: FC = () => {
   const [employee, setEmployee] = useState([]);
   const [visibleEmployee, setVisibleEmployee] = useState(8);
+   const [errorMessage, setErrorMessage] = useState("");
 
   const allCardShow = visibleEmployee >= employee.length;
 
@@ -17,12 +18,13 @@ const EmployeeCardList: FC = () => {
         setEmployee(res.data);
       })
       .catch((error) => {
-        throw new Error(error);
+        setErrorMessage(error.response.data.message);
       });
   }, []);
   return (
     <div className={styles.wrapper}>
       <h2>Кандидаты для работы</h2>
+      {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
       <div className={styles.cardList}>
         {employee.slice(0, visibleEmployee).map((item: EmployeeCardProps) => (
           <EmployeeCard key={item.id} {...item} />

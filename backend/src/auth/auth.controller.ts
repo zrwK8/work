@@ -1,4 +1,13 @@
-import { BadRequestException, Body, Controller, HttpCode, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+	BadRequestException,
+	Body,
+	Controller,
+	HttpCode,
+	Post,
+	UnauthorizedException,
+	UsePipes,
+	ValidationPipe,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from '../interfaces/dto/auth.dto';
 import { Users } from '../interfaces/entities/Users';
@@ -14,14 +23,19 @@ export class AuthController {
 		if (oldUser) {
 			throw new BadRequestException('User already exists');
 		}
-		return this.authService.createUser(createUserDto);
+		return await this.authService.createUser(createUserDto);
 	}
 
 	@HttpCode(200)
 	@Post('login')
-	public async login(@Body() { email, password }: AuthDto): Promise<{ accessToken: string }> {
-		const logged = await this.authService.validateUser(email, password);
-		const userRole = await this.authService.findUser(email);
-		return this.authService.login(logged.email, userRole.role);
+	public async login(@Body() { email, password }: AuthDto) {
+		try {
+			const logged = await this.authService.validateUser(email, password);
+			const userRole = await this.authService.findUser(email);
+			return this.authService.login(logged.email, userRole.role);
+		} catch (error) {
+			throw new UnauthorizedException('Please check your email or password!');
+		
+		}
 	}
 }
