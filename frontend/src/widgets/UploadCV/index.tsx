@@ -14,7 +14,7 @@ const UploadCV: FC = () => {
           В теме письма напишите свое имя, описание должности, на которую хотите
           подать заявку
         </p>
-        <Link to="/cabinet" className={styles.link}>
+        <Link to="/profile" className={styles.link}>
           Загрузить резюме
         </Link>
       </div>

@@ -3,7 +3,7 @@ import { Form, Input } from "antd";
 import styles from "./index.module.scss";
 import Button from "../../../shared/ui/Button";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ButtonLink from "../../../shared/ui/ButtonLink";
 
 const LoginForm: FC = () => {
@@ -12,6 +12,8 @@ const LoginForm: FC = () => {
     password: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const handleChangeEmail = (event: any) => {
     const value = event.target.value;
@@ -32,7 +34,11 @@ const LoginForm: FC = () => {
     axios
       .post("http://localhost:3000/api/auth/login", userData)
       .then((response) => {
-        response.headers["Authorization"] = response.data.accessToken;
+        if (response.data.accessToken) {
+          response.headers["Authorization"] = response.data.accessToken;
+          localStorage.setItem("token", response.data.accessToken);
+          navigate("/profile");
+        }
       })
       .catch((error) => {
         setErrorMessage(error.response.data.message);

@@ -3,6 +3,7 @@ import Logo from "../../Logo";
 import Navbar from "../../Navbar";
 import AuthButtons from "../../AuthButtons";
 import styles from "./index.module.scss";
+import LoggedInButtons from "../../LoggedInButtons";
 
 const Header: FC = () => {
   return (
@@ -10,7 +11,7 @@ const Header: FC = () => {
       <div className={styles.header}>
         <Logo />
         <Navbar />
-        <AuthButtons />
+        {localStorage.getItem("token") ? <LoggedInButtons /> : <AuthButtons />}
       </div>
     </div>
   );
