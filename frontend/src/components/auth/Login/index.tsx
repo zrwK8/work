@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { Form, Input } from "antd";
 import styles from "./index.module.scss";
 import Button from "../../../shared/ui/Button";
@@ -6,39 +6,31 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import ButtonLink from "../../../shared/ui/ButtonLink";
 
+interface LoginData {
+  email: string;
+  password: string;
+}
+
 const LoginForm: FC = () => {
-  const [body, setBody] = useState({
+  const [body, setBody] = useState<LoginData>({
     email: "",
     password: "",
   });
-  const [errorMessage, setErrorMessage] = useState("");
-
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const navigate = useNavigate();
 
-  const handleChangeEmail = (event: any) => {
-    const value = event.target.value;
-    setBody({ ...body, email: value });
-  };
-
-  const handleChangePassword = (event: any) => {
-    const value = event.target.value;
-    setBody({ ...body, password: value });
-  };
-
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    const userData = {
+    const userData: LoginData = {
       email: body.email,
       password: body.password,
     };
     axios
       .post("http://localhost:3000/api/auth/login", userData)
       .then((response) => {
-        if (response.data.accessToken) {
-          response.headers["Authorization"] = response.data.accessToken;
-          localStorage.setItem("token", response.data.accessToken);
-          navigate("/profile");
-        }
+        response.headers["Authorization"] = response.data.accessToken;
+        localStorage.setItem("token", response.data.accessToken);
+        navigate("/profile");
       })
       .catch((error) => {
         setErrorMessage(error.response.data.message);
@@ -63,7 +55,9 @@ const LoginForm: FC = () => {
         >
           <Input
             value={body.email}
-            onChange={handleChangeEmail}
+            onChange={(event) =>
+              setBody({ ...body, email: event.target.value })
+            }
             placeholder="Почта"
             className={styles.input}
           />
@@ -74,7 +68,9 @@ const LoginForm: FC = () => {
         >
           <Input.Password
             value={body.password}
-            onChange={handleChangePassword}
+            onChange={(event) =>
+              setBody({ ...body, password: event.target.value })
+            }
             placeholder="Пароль"
             className={styles.input}
           />

@@ -1,59 +1,49 @@
 import { Input, Form } from "antd";
 import axios from "axios";
-import { FC, useState } from "react";
-import { Link } from "react-router-dom";
+import { ChangeEvent, FC, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import ButtonLink from "../../../shared/ui/ButtonLink";
 import styles from "./index.module.scss";
 import Button from "../../../shared/ui/Button";
 
+interface BodyData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
 const RegisterForm: FC = () => {
-  const [body, setBody] = useState({
+  const [body, setBody] = useState<BodyData>({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
   });
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const navigate = useNavigate();
 
-  const handleChangeFirstName = (event: any) => {
-    const value = event.target.value;
-    setBody({ ...body, firstName: value });
-  };
-
-  const handleChangeLastName = (event: any) => {
-    const value = event.target.value;
-    setBody({ ...body, lastName: value });
-  };
-
-  const handleChangeEmail = (event: any) => {
-    const value = event.target.value;
-    setBody({ ...body, email: value });
-  };
-
-  const handleChangePassword = (event: any) => {
-    const value = event.target.value;
-    setBody({ ...body, password: value });
-  };
-
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    const userData = {
+    const userData: BodyData = {
       firstName: body.firstName,
       lastName: body.lastName,
       email: body.email,
       password: body.password,
     };
-
     axios
       .post("http://localhost:3000/api/auth/register", userData)
       .then((response) => {
-        response.data.message === "User created";
+        response.headers["Authorization"] = response.data.accessToken;
+        localStorage.setItem("token", response.data.accessToken);
+        navigate("/");
       })
       .catch((error) => {
         setErrorMessage(error.response.data.message);
       });
   };
 
+  // ! need error message fix
   return (
     <div className={styles.wrapper}>
       <Form
@@ -65,6 +55,7 @@ const RegisterForm: FC = () => {
         autoComplete="off"
         className={styles.registerForm}
       >
+        {/* need fix */}
         {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
         <Form.Item
           name="firstName"
@@ -73,7 +64,9 @@ const RegisterForm: FC = () => {
           <Input
             value={body.firstName}
             placeholder="Имя"
-            onChange={handleChangeFirstName}
+            onChange={(event) =>
+              setBody({ ...body, firstName: event.target.value })
+            }
             className={styles.input}
           />
         </Form.Item>
@@ -84,7 +77,9 @@ const RegisterForm: FC = () => {
           <Input
             value={body.lastName}
             placeholder="Фамилия"
-            onChange={handleChangeLastName}
+            onChange={(event) =>
+              setBody({ ...body, lastName: event.target.value })
+            }
             className={styles.input}
           />
         </Form.Item>
@@ -95,7 +90,9 @@ const RegisterForm: FC = () => {
           <Input
             value={body.email}
             placeholder="Почта"
-            onChange={handleChangeEmail}
+            onChange={(event) =>
+              setBody({ ...body, email: event.target.value })
+            }
             className={styles.input}
           />
         </Form.Item>
@@ -106,7 +103,9 @@ const RegisterForm: FC = () => {
           <Input.Password
             value={body.password}
             placeholder="Пароль"
-            onChange={handleChangePassword}
+            onChange={(event) =>
+              setBody({ ...body, password: event.target.value })
+            }
             className={styles.input}
           />
         </Form.Item>
