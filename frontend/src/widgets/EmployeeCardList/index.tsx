@@ -5,9 +5,9 @@ import styles from "./index.module.scss";
 import Button from "../../shared/ui/Button";
 
 const EmployeeCardList: FC = () => {
-  const [employee, setEmployee] = useState([]);
-  const [visibleEmployee, setVisibleEmployee] = useState(8);
-   const [errorMessage, setErrorMessage] = useState("");
+  const [employee, setEmployee] = useState<EmployeeCardProps[]>([]);
+  const [visibleEmployee, setVisibleEmployee] = useState<number>(8);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const allCardShow = visibleEmployee >= employee.length;
 
@@ -24,7 +24,9 @@ const EmployeeCardList: FC = () => {
   return (
     <div className={styles.wrapper}>
       <h2>Кандидаты для работы</h2>
-      {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
+      {errorMessage && (
+        <div className={styles.errorMessage}>{errorMessage}</div>
+      )}
       <div className={styles.cardList}>
         {employee.slice(0, visibleEmployee).map((item: EmployeeCardProps) => (
           <EmployeeCard key={item.id} {...item} />

@@ -28,7 +28,8 @@ const LoginForm: FC = () => {
     axios
       .post("http://localhost:3000/api/auth/login", userData)
       .then((response) => {
-        response.headers["Authorization"] = response.data.accessToken;
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + response.data.accessToken;
         localStorage.setItem("token", response.data.accessToken);
         navigate("/profile");
       })

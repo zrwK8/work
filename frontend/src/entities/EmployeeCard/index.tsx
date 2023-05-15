@@ -7,14 +7,30 @@ export interface EmployeeCardProps {
   nameSurname: string;
   age: number;
   position: string;
-  occupying: string;
-  description: string;
+  workType: string[];
+  workExperience: number;
+  country: string;
+  city: string;
   salary: number;
+  description: string;
+  expectations: string;
+  skills: string;
 }
 
 const EmployeeCard: FC<EmployeeCardProps> = (props) => {
-  const { image, nameSurname, age, position, occupying, description, salary } =
-    props;
+  const {
+    image,
+    nameSurname,
+    age,
+    position,
+    workType,
+    workExperience,
+    country,
+    city,
+    description,
+    salary,
+    skills,
+  } = props;
 
   return (
     <div className={styles.card}>
@@ -23,14 +39,24 @@ const EmployeeCard: FC<EmployeeCardProps> = (props) => {
           <img src={image} />
           <div className={styles.info}>
             <p>{nameSurname}</p>
-            <span>Возраст: {age}</span>
+            <span>Возраст: {age} </span>
+            <span>Опыт работы: {workExperience}</span>
           </div>
         </div>
         <div className={styles.positionInfo}>
           <p>{position}</p>
-          <span>{occupying}</span>
+        </div>
+        <div className={styles.workType}>
+          <span>{Object.values(workType).splice(1).join(' ').toLowerCase()}</span>
+        </div>
+        <div className={styles.countryCity}>
+          <span>{country}, </span>
+          <span>{city}</span>
         </div>
         <p className={styles.description}>{description}</p>
+        <div className={styles.skills}>
+          <span>{skills}</span>
+        </div>
         <div className={styles.salary}>
           <p>
             ${salary}

@@ -1,4 +1,16 @@
-import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+	BadRequestException,
+	Body,
+	Controller,
+	Delete,
+	Get,
+	NotFoundException,
+	Param,
+	Post,
+	UseGuards,
+	UsePipes,
+	ValidationPipe,
+} from '@nestjs/common';
 import { VacancyService } from './vacancy.service';
 import { CreateVacancyDto, UpdateVacancyDto } from '../interfaces/dto/vacancies.dto';
 import { EmailDto } from '../interfaces/dto/email.dto';
@@ -17,7 +29,6 @@ export class VacancyController {
 	@Get('/')
 	public async getVacancies(): Promise<Vacancies[]> {
 		try {
-
 			return await this.vacancyService.getVacancies();
 		} catch (error) {
 			throw new NotFoundException('No vacancies found');
@@ -34,7 +45,6 @@ export class VacancyController {
 	public async subscribeToVacancies(@Body() { email }: EmailDto): Promise<Emails> {
 		try {
 			return await this.vacancyService.subscribeToVacancies(email);
-
 		} catch (error) {
 			throw new BadRequestException('Email is not valid');
 		}
@@ -42,22 +52,22 @@ export class VacancyController {
 
 	@Post('/create-vacancy')
 	@UseGuards(JwtAuthGuard, RolesGuard)
-	@Roles(UserRole.Superadmin, UserRole.Admin, UserRole.Employer)
+	@Roles(UserRole.Superadmin, UserRole.Admin, UserRole.Employer, UserRole.User)
 	public async createVacancy(@Body() vacanciesDto: CreateVacancyDto): Promise<CreateVacancyDto> {
 		return await this.vacancyService.createVacancy(vacanciesDto);
 	}
 
 	@Post('/update-vacancy')
 	@UseGuards(JwtAuthGuard, RolesGuard)
-	@Roles(UserRole.Superadmin, UserRole.Admin, UserRole.Employer)
+	@Roles(UserRole.Superadmin, UserRole.Admin, UserRole.Employer, UserRole.User)
 	public async updateVacancy(@Body() vacanciesDto: UpdateVacancyDto): Promise<UpdateResult> {
 		return await this.vacancyService.updateVacancy(vacanciesDto.id, vacanciesDto);
 	}
 
 	@Delete('/delete-vacancy')
 	@UseGuards(JwtAuthGuard, RolesGuard)
-	@Roles(UserRole.Superadmin, UserRole.Admin, UserRole.Employer)
-	public async deleteVacancy(id: number): Promise<DeleteResult> {
+	@Roles(UserRole.Superadmin, UserRole.Admin, UserRole.Employer, UserRole.User)
+	public async deleteVacancy(@Param('id') id: number): Promise<DeleteResult> {
 		return await this.vacancyService.deleteVacancy(id);
 	}
 }

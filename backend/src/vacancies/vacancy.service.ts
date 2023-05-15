@@ -14,7 +14,7 @@ export class VacancyService {
 	) {}
 
 	public async getVacancies(): Promise<Vacancies[]> {
-		return await this.vacanciesRepository.find();
+		return await this.vacanciesRepository.find({ relations: ['workType'] });
 	}
 
 	public async getVacancy(id: number): Promise<Vacancies> {

@@ -34,7 +34,8 @@ const RegisterForm: FC = () => {
     axios
       .post("http://localhost:3000/api/auth/register", userData)
       .then((response) => {
-        response.headers["Authorization"] = response.data.accessToken;
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + response.data.accessToken;
         localStorage.setItem("token", response.data.accessToken);
         navigate("/");
       })

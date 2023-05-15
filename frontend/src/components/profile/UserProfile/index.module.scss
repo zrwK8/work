@@ -1,15 +1,13 @@
 .userProfile {
      
-     font-size: 30px;
      font-weight: 500;
      font-family: "Roboto";
      display: flex;
      align-items: center;
      flex-direction: column;
+     margin-bottom: 120px;
 
      .searchType {
           margin-bottom: 30px;
      }
-
-     
 }
