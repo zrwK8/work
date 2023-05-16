@@ -4,7 +4,6 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { Vacancies } from '../interfaces/entities/Vacancies';
 import { Users } from '../interfaces/entities/Users';
 import { Emails } from '../interfaces/entities/Emails';
-import { WorkType } from '../interfaces/entities/WorkType';
 
 @Injectable()
 export class TypeOrmConfig implements TypeOrmOptionsFactory {
@@ -20,7 +19,7 @@ export class TypeOrmConfig implements TypeOrmOptionsFactory {
 			database: this.configService.get('POSTGRES_DATABASE'),
 			synchronize: true,
 			logging: true,
-			entities: [Vacancies, Users, Emails, WorkType],
+			entities: [Vacancies, Users, Emails],
 			subscribers: [],
 			migrations: [],
 		};

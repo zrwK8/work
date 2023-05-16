@@ -14,8 +14,8 @@ const EmployeeCardList: FC = () => {
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/vacancies")
-      .then((res) => {
-        setEmployee(res.data);
+      .then((response) => {
+        setEmployee(response.data);
       })
       .catch((error) => {
         setErrorMessage(error.response.data.message);

@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 const LoggedInButtons: FC = () => {
   const navigate = useNavigate();
   const handleSubmit = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("access_token");
     navigate("/");
     window.location.reload();
   };

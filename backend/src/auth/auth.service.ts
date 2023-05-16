@@ -41,10 +41,10 @@ export class AuthService {
 		return { email: user.email, role: user.role };
 	}
 
-	public async login(email: string, role: string): Promise<{ accessToken: string }> {
+	public async login(email: string, role: string): Promise<{ access_token: string }> {
 		const payload = { email, role };
 		return {
-			accessToken: await this.jwtService.signAsync(payload),
+			access_token: await this.jwtService.signAsync(payload),
 		};
 	}
 }

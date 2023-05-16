@@ -1,40 +1,12 @@
-import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { WorkType } from './WorkType';
-
-// @Entity()
-// export class VacanciesOld extends BaseEntity {
-// 	@PrimaryGeneratedColumn()
-// 	id: number;
-
-// 	@Column()
-// 	image: string;
-
-// 	@Column()
-// 	nameSurname: string;
-
-// 	@Column()
-// 	age: number;
-
-// 	@Column()
-// 	position: string;
-
-// 	@Column()
-// 	occupying: string;
-
-// 	@Column()
-// 	description: string;
-
-// 	@Column()
-// 	salary: number;
-// }
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Vacancies extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column()
-	image: string;
+	@Column({ nullable: true })
+	image?: string;
 
 	@Column()
 	nameSurname: string;
@@ -60,10 +32,11 @@ export class Vacancies extends BaseEntity {
 	@Column()
 	description: string;
 
-	@Column()
-	skills: string;
 
-	@OneToOne(() => WorkType, workType => workType.vacancy, { cascade: true })
-	@JoinColumn()
-	workType: WorkType;
+	@Column('text', { nullable: true, array: true })
+	workType: string[];
+
+	@Column('text', { nullable: true, array: true })
+	skills: string[];
 }
+

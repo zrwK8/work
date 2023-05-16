@@ -47,7 +47,9 @@ const EmployeeCard: FC<EmployeeCardProps> = (props) => {
           <p>{position}</p>
         </div>
         <div className={styles.workType}>
-          <span>{Object.values(workType).splice(1).join(' ').toLowerCase()}</span>
+          <span>
+            {Object.values(workType).splice(1).join(", ").toLowerCase()}
+          </span>
         </div>
         <div className={styles.countryCity}>
           <span>{country}, </span>
@@ -55,7 +57,9 @@ const EmployeeCard: FC<EmployeeCardProps> = (props) => {
         </div>
         <p className={styles.description}>{description}</p>
         <div className={styles.skills}>
-          <span>{skills}</span>
+          <span>
+            {Object.values(skills).splice(1).join(", ").toLowerCase()}
+          </span>
         </div>
         <div className={styles.salary}>
           <p>

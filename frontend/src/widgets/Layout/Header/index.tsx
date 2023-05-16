@@ -11,7 +11,11 @@ const Header: FC = () => {
       <div className={styles.header}>
         <Logo />
         <Navbar />
-        {localStorage.getItem("token") ? <LoggedInButtons /> : <AuthButtons />}
+        {localStorage.getItem("access_token") ? (
+          <LoggedInButtons />
+        ) : (
+          <AuthButtons />
+        )}
       </div>
     </div>
   );

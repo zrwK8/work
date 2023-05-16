@@ -10,7 +10,11 @@ import { PlusOutlined } from "@ant-design/icons";
 import type { InputRef } from "antd";
 import { Space, Input, Tag, Tooltip, theme } from "antd";
 
-const Tags: FC = () => {
+interface TagProps {
+  onChange: (value: any) => void;
+}
+
+const Tags: FC<TagProps> = ({ onChange }) => {
   const { token } = theme.useToken();
   const [tags, setTags] = useState<string[]>([]);
   const [inputVisible, setInputVisible] = useState(false);
@@ -33,6 +37,7 @@ const Tags: FC = () => {
   const handleClose = (removedTag: string) => {
     const newTags = tags.filter((tag) => tag !== removedTag);
     setTags(newTags);
+    onChange(newTags);
   };
 
   const showInput = () => {
@@ -46,6 +51,7 @@ const Tags: FC = () => {
   const handleInputConfirm = () => {
     if (inputValue && tags.indexOf(inputValue) === -1) {
       setTags([...tags, inputValue]);
+      onChange([...tags, inputValue]);
     }
     setInputVisible(false);
     setInputValue("");

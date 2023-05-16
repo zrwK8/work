@@ -1,10 +1,12 @@
 .card {
+  position: relative;
   width: 268px;
-  height: 460px;
   border-radius: 20px;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
 
   .cardInfo {
+    display: grid;
+    grid-template-rows: 1fr auto;
     padding: 19px 12px 24px 20px;
 
     .shortInfo {
@@ -36,6 +38,7 @@
     }
 
     .positionInfo {
+      min-height: 80px;
       padding-bottom: 10px;
 
       > p {
@@ -50,17 +53,18 @@
     }
 
     .description {
-      height: 72px;
+      min-height: 150px;
       padding-top: 15px;
       font-size: 12px;
       line-height: 14px;
       color: #585858;
-      width: 225px;
     }
 
     .skills {
+      padding-top: 20px;
       font-size: 14px;
-      padding-top: 90px;
+
+    
     }
 
     .workType {
@@ -70,28 +74,29 @@
     .countryCity {
       font-size: 12px;
     }
+      
+      .salary {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 40px;
 
-    .salary {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 50px;
+        > p {
+          font-size: 18px;
+          line-height: 21px;
 
-      > p {
-        font-size: 18px;
-        line-height: 21px;
+          > span {
+            font-size: 12px;
+          }
+        }
 
-        > span {
-          font-size: 12px;
+        > button {
+          color: #4943da;
+          border: none;
+          background: #f9f9ff;
+          cursor: pointer;
+          border-radius: 10px;
         }
       }
-
-      > button {
-        color: #4943da;
-        border: none;
-        background: #f9f9ff;
-        cursor: pointer;
-        border-radius: 10px;
-      }
-    }
+    
   }
 }

@@ -8,21 +8,13 @@ export class CreateVacancyDto {
 	city: string;
 	salary: number;
 	description: string;
-	skills: string;
+	workType: string[];
+	skills: string[];
 }
 
 export class UpdateVacancyDto {
 	id: number;
-	image: string;
-	nameSurname: string;
-	age: number;
-	position: string;
-	workExperience: number;
-	country: string;
-	city: string;
-	salary: number;
-	description: string;
-	skills: string;
+	update: CreateVacancyDto;
 }
 
 

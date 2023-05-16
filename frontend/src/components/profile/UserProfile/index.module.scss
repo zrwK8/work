@@ -1,13 +1,20 @@
 .userProfile {
-     
-     font-weight: 500;
-     font-family: "Roboto";
-     display: flex;
-     align-items: center;
-     flex-direction: column;
-     margin-bottom: 120px;
+  display: flex;
+  margin-bottom: 120px;
+  align-items: center;
+  flex-direction: column;
 
-     .searchType {
-          margin-bottom: 30px;
-     }
+  form {
+    .salaryExpectation {
+      .span {
+        font-size: 12px;
+      }
+    }
+
+    .city {
+      .span {
+        font-size: 12px;
+      }
+    }
+  }
 }

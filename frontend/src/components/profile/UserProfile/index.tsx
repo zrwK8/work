@@ -1,28 +1,22 @@
 import { ChangeEvent, FC, useState } from "react";
 import styles from "./index.module.scss";
-import {
-  Checkbox,
-  Radio,
-  Input,
-  Select,
-  Form,
-  Slider,
-  InputNumber,
-} from "antd";
+import { Checkbox, Input, Form, Slider, InputNumber } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import Button from "../../../shared/ui/Button";
 import Tags from "../../../shared/ui/Tags/Tags";
 import axios from "axios";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
+import CountrySelector from "../../CountrySelector";
 
 interface BodyData {
   nameSurname: string;
-  age: number;
-  salaryExpectation: number;
+  position: string;
+  age: number | null;
+  salary: number | null;
   workExperience: number;
   country: string;
   city: string;
-  skills: string;
+  skills: string[];
   workType: CheckboxValueType[];
   description: string;
 }
@@ -30,12 +24,13 @@ interface BodyData {
 const UserProfile: FC = () => {
   const [body, setBody] = useState<BodyData>({
     nameSurname: "",
-    age: 0,
-    salaryExpectation: 0,
+    position: "",
+    age: null,
+    salary: null,
     workExperience: 0,
     country: "",
     city: "",
-    skills: "",
+    skills: [],
     workType: [],
     description: "",
   });
@@ -44,8 +39,9 @@ const UserProfile: FC = () => {
     event.preventDefault();
     const userData: BodyData = {
       nameSurname: body.nameSurname,
+      position: body.position,
       age: body.age,
-      salaryExpectation: body.salaryExpectation,
+      salary: body.salary,
       workExperience: body.workExperience,
       country: body.country,
       city: body.city,
@@ -65,67 +61,73 @@ const UserProfile: FC = () => {
 
   return (
     <div className={styles.userProfile}>
-      <div className={styles.searchType}>
-        <Radio.Group>
-          <Radio value="active">Активный поиск</Radio>
-          <Radio value="passive">Пассивный поиск</Radio>
-        </Radio.Group>
-      </div>
       <Form className={styles.form}>
-        <Form.Item label="Имя и фамилия" className={styles.inputs}>
+        <Form.Item label="Имя и фамилия" className={styles.nameSurname}>
           <Input
+            className={styles.input}
             value={body.nameSurname}
             onChange={(event) =>
               setBody({ ...body, nameSurname: event.target.value })
             }
           />
         </Form.Item>
-        <Form.Item label="Возраст" className={styles.inputs}>
+        <Form.Item label="Должность" className={styles.position}>
+          <Input
+            className={styles.position}
+            value={body.position}
+            onChange={(event) =>
+              setBody({ ...body, position: event.target.value })
+            }
+          />
+        </Form.Item>
+        <Form.Item label="Возраст" className={styles.age}>
           <InputNumber
             min={0}
             max={100}
-            defaultValue={0}
             value={body.age}
-            onChange={(value) => setBody({ ...body, age: value ?? 0 })}
+            onChange={(values: any) => setBody({ ...body, age: values })}
           />
         </Form.Item>
-        <Form.Item label="Зарплатные ожидания" className={styles.inputs}>
+        <Form.Item
+          label="Зарплатные ожидания"
+          className={styles.salaryExpectation}
+        >
           <Input
-            value={body.salaryExpectation}
-            onChange={(event) =>
-              setBody({ ...body, salaryExpectation: +event.target.value })
-            }
+            value={body.salary as number}
+            onChange={(event) => {
+              const regExp = /^[0-9\b]+$/;
+
+              event.target.value === "" ||
+                (regExp.test(event.target.value) &&
+                  setBody({ ...body, salary: +event.target.value }));
+            }}
           />
+          <span className={styles.span}>Сумма в долларах.</span>
         </Form.Item>
         <Form.Item label="Опыт работы" className={styles.workExperienceSlider}>
           <Slider
             step={1}
             min={0}
             max={10}
+            className={styles.slider}
             value={body.workExperience}
             onChange={(event) => setBody({ ...body, workExperience: event })}
           />
         </Form.Item>
         <Form.Item label="Страна" className={styles.country}>
-          <Select>
-            <Select.Option
-              value={body.country}
-              onChange={(event: any) =>
-                setBody({ ...body, country: event.target.select })
-              }
-            >
-              Demo
-            </Select.Option>
-          </Select>
+          <CountrySelector />
         </Form.Item>
-        <Form.Item label="Город" className={styles.inputs}>
+        <Form.Item label="Город" className={styles.city}>
           <Input
             value={body.city}
             onChange={(event) => setBody({ ...body, city: event.target.value })}
           />
+          <span className={styles.span}>
+            Укажите город, в котором хотите искать работу.
+          </span>
         </Form.Item>
         <Form.Item label="Навыки" className={styles.skills}>
-          <Tags />
+          <Tags onChange={(event) => setBody({ ...body, skills: event })} />
         </Form.Item>
         <Form.Item label="Вид трудоустройства" className={styles.workType}>
           <Checkbox.Group
