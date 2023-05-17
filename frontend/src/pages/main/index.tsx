@@ -8,14 +8,14 @@ import Footer from "../../widgets/Layout/Footer";
 
 const Home: FC = () => {
   return (
-    <div>
+    <>
       <Header />
       <SliderProfession />
       <UploadCV />
       <EmployeeCardList />
       <NewsSubscribe />
       <Footer />
-    </div>
+    </>
   );
 };
 

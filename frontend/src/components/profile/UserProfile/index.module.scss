@@ -5,6 +5,13 @@
   flex-direction: column;
 
   form {
+    font-family: "Roboto";
+    .image {
+      .span {
+        font-size: 12px;
+      }
+    }
+
     .salaryExpectation {
       .span {
         font-size: 12px;

@@ -2,11 +2,13 @@ import { FC, useState } from "react";
 import { Space, Input, Button } from "antd";
 import styles from "./index.module.scss";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const NewsSubscribe: FC = () => {
   const [email, setEmail] = useState("");
-  // const [errorMessage, setErrorMesage] = useState("");
-  // const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMesage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -16,13 +18,12 @@ const NewsSubscribe: FC = () => {
     axios
       .post("http://localhost:3000/api/vacancies/subscribe", userData)
       .then((response) => {
-        // setSuccessMessage(response.data.message);
-        console.log(response);
-        window.location.reload();
+        setSuccessMessage(response.data.message);
+        toast.success(successMessage);
       })
       .catch((error) => {
-        // setErrorMesage(error.response.data.message);
-        console.log(error);
+        setErrorMesage(error.response.data.message);
+        toast.error(errorMessage);
       });
   };
 
@@ -32,7 +33,6 @@ const NewsSubscribe: FC = () => {
         Никогда не хотите пропустить <span>новости о вакансиях?</span>
       </div>
       <div className={styles.content}>
-        {/* {errorMessage ? <p>{errorMessage}</p> : <p>{successMessage}</p>} */}
         <Space.Compact>
           <Input
             value={email}
@@ -49,6 +49,18 @@ const NewsSubscribe: FC = () => {
           >
             Подписаться
           </Button>
+          <ToastContainer
+            position="bottom-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
         </Space.Compact>
       </div>
     </div>

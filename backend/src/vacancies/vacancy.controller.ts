@@ -20,7 +20,6 @@ import { JwtAuthGuard } from '../guards/jwt.guard';
 import { RolesGuard } from '../guards/roles.guard';
 import { Roles } from '../decorators/roles.decorator';
 import { UserRole } from '../interfaces/enums/role.enum';
-import { Emails } from '../interfaces/entities/Emails';
 
 @Controller('vacancies')
 export class VacancyController {
@@ -31,7 +30,7 @@ export class VacancyController {
 		try {
 			return await this.vacancyService.getVacancies();
 		} catch (error) {
-			throw new NotFoundException('No vacancies found');
+			throw new NotFoundException('Вакансии не найдены.');
 		}
 	}
 
@@ -42,19 +41,35 @@ export class VacancyController {
 
 	@Post('/subscribe')
 	@UsePipes(new ValidationPipe())
-	public async subscribeToVacancies(@Body() { email }: EmailDto): Promise<Emails> {
+	public async subscribeToVacancies(@Body() { email }: EmailDto) {
 		try {
-			return await this.vacancyService.subscribeToVacancies(email);
+			const subscribed = await this.vacancyService.subscribeToVacancies(email);
+			return {
+				statusCode: 200,
+				message: 'Вы успешно подписались на рассылку. Спасибо!',
+				data: subscribed,
+				error: null,
+			};
 		} catch (error) {
-			throw new BadRequestException('Email is not valid');
+			throw new BadRequestException('Что-то пошло не так. Возможно вы уже подписались на рассылку!');
 		}
 	}
 
 	@Post('/create-vacancy')
 	@UseGuards(JwtAuthGuard, RolesGuard)
 	@Roles(UserRole.Superadmin, UserRole.Admin, UserRole.Employer, UserRole.User)
-	public async createVacancy(@Body() vacanciesDto: CreateVacancyDto): Promise<CreateVacancyDto> {
-		return await this.vacancyService.createVacancy(vacanciesDto);
+	public async createVacancy(@Body() vacanciesDto: CreateVacancyDto) {
+		try {
+			const vacancies = await this.vacancyService.createVacancy(vacanciesDto);
+			return {
+				statusCode: 201,
+				message: 'Вы оставили свою вакансию на сайте. Спасибо!',
+				data: vacancies,
+				error: null,
+			};
+		} catch (error) {
+			throw new BadRequestException('Что-то пошло не так. Проверьте правильность полей.');
+		}
 	}
 
 	@Post('/update-vacancy')

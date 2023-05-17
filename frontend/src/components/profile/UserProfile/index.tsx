@@ -9,6 +9,7 @@ import { CheckboxValueType } from "antd/es/checkbox/Group";
 import CountrySelector from "../../CountrySelector";
 
 interface BodyData {
+  image: string;
   nameSurname: string;
   position: string;
   age: number | null;
@@ -23,6 +24,7 @@ interface BodyData {
 
 const UserProfile: FC = () => {
   const [body, setBody] = useState<BodyData>({
+    image: "",
     nameSurname: "",
     position: "",
     age: null,
@@ -34,10 +36,14 @@ const UserProfile: FC = () => {
     workType: [],
     description: "",
   });
+  const [successMessage, setSuccessMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
 
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     const userData: BodyData = {
+      image: body.image,
       nameSurname: body.nameSurname,
       position: body.position,
       age: body.age,
@@ -52,17 +58,37 @@ const UserProfile: FC = () => {
     axios
       .post("http://localhost:3000/api/vacancies/create-vacancy", userData)
       .then((response) => {
-        console.log(response);
+        setSuccessMessage(response.data.message);
       })
       .catch((error) => {
-        console.log(error);
+        setErrorMessage(error.response.data.message);
       });
   };
 
+  console.log(body);
+
   return (
     <div className={styles.userProfile}>
+      {errorMessage ? (
+        <p className={styles.errorMessage}>{errorMessage}</p>
+      ) : (
+        <p className={styles.successMessage}>{successMessage}</p>
+      )}
       <Form className={styles.form}>
-        <Form.Item label="Имя и фамилия" className={styles.nameSurname}>
+        <Form.Item label="Изображение" className={styles.image}>
+          <Input
+            className={styles.input}
+            value={body.image}
+            onChange={(event) =>
+              setBody({ ...body, image: event.target.value })
+            }
+          />
+          <span className={styles.span}>
+            Вставьте сюда свою ссылку на изображение. Это поле можно оставить
+            пустым.
+          </span>
+        </Form.Item>
+        <Form.Item className={styles.nameSurname} label="Имя и фамилия">
           <Input
             className={styles.input}
             value={body.nameSurname}
@@ -115,7 +141,13 @@ const UserProfile: FC = () => {
           />
         </Form.Item>
         <Form.Item label="Страна" className={styles.country}>
-          <CountrySelector />
+          <CountrySelector
+            value={country}
+            onChange={(event: any) => {
+              setCountry(event);
+              setBody({ ...body, country: event });
+            }}
+          />
         </Form.Item>
         <Form.Item label="Город" className={styles.city}>
           <Input

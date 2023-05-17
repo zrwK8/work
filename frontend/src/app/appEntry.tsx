@@ -4,11 +4,11 @@ import "./styles/index.scss";
 import { RouterProvider } from "react-router-dom";
 import { appRouter } from "./appRouter";
 import "../shared/base.scss";
-import axios from "axios";
+import { setTokenInHeaders } from "../utils/token";
 
 const accessToken = localStorage.getItem("access_token");
 if (accessToken) {
-  axios.defaults.headers.common["Authorization"] = "Bearer " + accessToken;
+  setTokenInHeaders("access_token");
 }
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

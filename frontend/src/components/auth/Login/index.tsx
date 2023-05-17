@@ -5,6 +5,7 @@ import Button from "../../../shared/ui/Button";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import ButtonLink from "../../../shared/ui/ButtonLink";
+import { setTokenInLocalStorage, setTokenInHeaders } from "../../../utils/token";
 
 interface LoginData {
   email: string;
@@ -28,9 +29,8 @@ const LoginForm: FC = () => {
     axios
       .post("http://localhost:3000/api/auth/login", userData)
       .then((response) => {
-        localStorage.setItem("access_token", response.data.access_token);
-          axios.defaults.headers.common["Authorization"] =
-            "Bearer " + localStorage.getItem("access_token");
+        setTokenInLocalStorage("access_token", response.data.access_token);
+        setTokenInHeaders("access_token");
         navigate("/profile");
       })
       .catch((error) => {

@@ -36,7 +36,13 @@ const EmployeeCard: FC<EmployeeCardProps> = (props) => {
     <div className={styles.card}>
       <div className={styles.cardInfo}>
         <div className={styles.shortInfo}>
-          <img src={image} />
+          <img
+            src={
+              image
+                ? image
+                : "https://cdn-icons-png.flaticon.com/512/4054/4054617.png"
+            }
+          />
           <div className={styles.info}>
             <p>{nameSurname}</p>
             <span>Возраст: {age} </span>
@@ -47,9 +53,7 @@ const EmployeeCard: FC<EmployeeCardProps> = (props) => {
           <p>{position}</p>
         </div>
         <div className={styles.workType}>
-          <span>
-            {Object.values(workType).splice(1).join(", ").toLowerCase()}
-          </span>
+          <span>{Object.values(workType).join(", ").toLowerCase()}</span>
         </div>
         <div className={styles.countryCity}>
           <span>{country}, </span>
@@ -57,9 +61,7 @@ const EmployeeCard: FC<EmployeeCardProps> = (props) => {
         </div>
         <p className={styles.description}>{description}</p>
         <div className={styles.skills}>
-          <span>
-            {Object.values(skills).splice(1).join(", ").toLowerCase()}
-          </span>
+          <span>{Object.values(skills).join(", ").toLowerCase()}</span>
         </div>
         <div className={styles.salary}>
           <p>

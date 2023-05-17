@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { CreateVacancyDto, UpdateVacancyDto } from '../interfaces/dto/vacancies.dto';
@@ -22,10 +22,22 @@ export class VacancyService {
 	}
 
 	public async subscribeToVacancies(email: string): Promise<Emails> {
+		const subscribed = await this.emailsRepository.findOneBy({ email });
+		if (subscribed) {
+			throw new BadRequestException();
+		}
 		return await this.emailsRepository.save({ email });
 	}
 
-	public async createVacancy(vacancy: CreateVacancyDto): Promise<CreateVacancyDto> {
+	public async createVacancy(vacancy: CreateVacancyDto) {
+		const vacancies = await this.vacanciesRepository.findOneBy({
+			nameSurname: vacancy.nameSurname,
+			age: vacancy.age,
+			position: vacancy.position,
+		});
+		if (vacancies) {
+			throw new BadRequestException();
+		}
 		return await this.vacanciesRepository.save({ ...vacancy });
 	}
 

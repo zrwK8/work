@@ -4,7 +4,7 @@ import styles from "./index.module.scss";
 
 const UploadCV: FC = () => {
   return (
-    <div className={styles.wrapper}>
+    <div id="section2" className={styles.wrapper}>
       <img height={400} width={600} src="https://i.imgur.com/AJK2xVd.png" />
       <div className={styles.content}>
         <p className={styles.title}>

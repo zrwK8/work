@@ -10,10 +10,14 @@ const Navbar: FC = () => {
           <Link to="/">Главная</Link>
         </li>
         <li>
-          <Link to="/find-jobs">Найти работу</Link>
+          <Link onClick={() => window.scrollBy(0, 700)} to="#">
+            Найти работу
+          </Link>
         </li>
         <li>
-          <Link to="/find-candidates">Найти кандидатов</Link>
+          <Link onClick={() => window.scrollBy(0, 1500)} to="#">
+            Найти кандидатов
+          </Link>
         </li>
       </ul>
     </nav>

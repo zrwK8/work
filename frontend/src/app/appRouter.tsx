@@ -4,6 +4,7 @@ import Home from "../pages/main";
 import Login from "../pages/login";
 import Register from "../pages/register";
 import Profile from "../pages/profile";
+import { HomeRedirect, LoginRedirect } from "./protectedRoutes";
 
 export const appRouter = createBrowserRouter([
   {
@@ -15,15 +16,27 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login />,
+        element: (
+          <HomeRedirect>
+            <Login />
+          </HomeRedirect>
+        ),
       },
       {
         path: "/register",
-        element: <Register />,
+        element: (
+          <HomeRedirect>
+            <Register />
+          </HomeRedirect>
+        ),
       },
       {
         path: "/profile",
-        element: <Profile />,
+        element: (
+          <LoginRedirect>
+            <Profile />
+          </LoginRedirect>
+        ),
       },
     ],
   },

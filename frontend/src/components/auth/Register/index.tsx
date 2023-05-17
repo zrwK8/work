@@ -5,6 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import ButtonLink from "../../../shared/ui/ButtonLink";
 import styles from "./index.module.scss";
 import Button from "../../../shared/ui/Button";
+import {
+  setTokenInHeaders,
+  setTokenInLocalStorage,
+} from "../../../utils/token";
 
 interface BodyData {
   firstName: string;
@@ -34,9 +38,8 @@ const RegisterForm: FC = () => {
     axios
       .post("http://localhost:3000/api/auth/register", userData)
       .then((response) => {
-        localStorage.setItem("acess_token", response.data.access_token);
-        axios.defaults.headers.common["Authorization"] =
-          "Bearer " + localStorage.getItem("acess_token");
+        setTokenInLocalStorage("access_token", response.data.access_token);
+        setTokenInHeaders("access_token");
         navigate("/");
       })
       .catch((error) => {

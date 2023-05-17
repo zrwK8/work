@@ -1,23 +1,11 @@
-import React, { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { Select } from "antd";
 import countryList from "react-select-country-list";
 
-
-const CountrySelector = () => {
-  const [value, setValue] = useState<string>("");
+const CountrySelector = ({ onChange, value }: any) => {
   const options = useMemo(() => countryList().getData(), []);
 
-  const changeHandler = (value: React.SetStateAction<string>) => {
-    setValue(value);
-  };
-
-  return (
-    <Select
-      options={options}
-      value={value}
-      onChange={changeHandler}
-    />
-  );
+  return <Select options={options} value={value} onChange={onChange} />;
 };
 
 export default CountrySelector;
