@@ -6,9 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const NewsSubscribe: FC = () => {
-  const [email, setEmail] = useState("");
-  const [errorMessage, setErrorMesage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [email, setEmail] = useState<string>(" ");
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -18,12 +16,10 @@ const NewsSubscribe: FC = () => {
     axios
       .post("http://localhost:3000/api/vacancies/subscribe", userData)
       .then((response) => {
-        setSuccessMessage(response.data.message);
-        toast.success(successMessage);
+        toast.success(response.data.message);
       })
       .catch((error) => {
-        setErrorMesage(error.response.data.message);
-        toast.error(errorMessage);
+        toast.error(error.response.data.message);
       });
   };
 

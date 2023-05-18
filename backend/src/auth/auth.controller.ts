@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from '../interfaces/dto/auth.dto';
-import { Users } from '../interfaces/entities/Users';
 
 @Controller('auth')
 export class AuthController {
@@ -18,12 +17,22 @@ export class AuthController {
 
 	@UsePipes(new ValidationPipe())
 	@Post('register')
-	public async register(@Body() createUserDto: AuthDto): Promise<Users> {
-		const oldUser = await this.authService.findUser(createUserDto.email);
-		if (oldUser) {
-			throw new BadRequestException('User already exists');
+	public async register(@Body() createUserDto: AuthDto) {
+		try {
+			const oldUser = await this.authService.findUser(createUserDto.email);
+			if (oldUser) {
+				throw new BadRequestException('Пользователь уже зарегистрирован!');
+			}
+			await this.authService.createUser(createUserDto);
+			return {
+				statusCode: 201,
+				data: null,
+				message: 'Пользователь успешно зарегистрирован.',
+				error: null,
+			};
+		} catch (error) {
+			throw new BadRequestException('Что-то пошло не так.');
 		}
-		return await this.authService.createUser(createUserDto);
 	}
 
 	@HttpCode(200)
@@ -32,10 +41,9 @@ export class AuthController {
 		try {
 			const logged = await this.authService.validateUser(email, password);
 			const userRole = await this.authService.findUser(email);
-			return this.authService.login(logged.email, userRole.role);
+			return await this.authService.login(logged.email, userRole.role);
 		} catch (error) {
-			throw new UnauthorizedException('Please check your email or password!');
-		
+			throw new UnauthorizedException('Пожалуйста проверьте свою почту или пароль!');
 		}
 	}
 }

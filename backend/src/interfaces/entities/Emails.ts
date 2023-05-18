@@ -5,6 +5,6 @@ export class Emails extends BaseEntity {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@Column()
+	@Column({ type: 'varchar', length: '50', nullable: false })
 	email: string;
 }

@@ -3,9 +3,21 @@
   margin-bottom: 120px;
   align-items: center;
   flex-direction: column;
+  font-family: "Roboto";
+
+  .errorMessage {
+    color: red;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .successMessage {
+    color: red;
+    font-size: 15px;
+    font-weight: 500;
+  }
 
   form {
-    font-family: "Roboto";
     .image {
       .span {
         font-size: 12px;

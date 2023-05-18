@@ -7,6 +7,7 @@ import Tags from "../../../shared/ui/Tags/Tags";
 import axios from "axios";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import CountrySelector from "../../CountrySelector";
+import { ToastContainer, toast } from "react-toastify";
 
 interface BodyData {
   image: string;
@@ -36,8 +37,6 @@ const UserProfile: FC = () => {
     workType: [],
     description: "",
   });
-  const [successMessage, setSuccessMessage] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string>("");
   const [country, setCountry] = useState<string>("");
 
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
@@ -58,22 +57,15 @@ const UserProfile: FC = () => {
     axios
       .post("http://localhost:3000/api/vacancies/create-vacancy", userData)
       .then((response) => {
-        setSuccessMessage(response.data.message);
+        toast.success(response.data.message);
       })
       .catch((error) => {
-        setErrorMessage(error.response.data.message);
+        toast.error(error.response.data.message);
       });
   };
 
-  console.log(body);
-
   return (
     <div className={styles.userProfile}>
-      {errorMessage ? (
-        <p className={styles.errorMessage}>{errorMessage}</p>
-      ) : (
-        <p className={styles.successMessage}>{successMessage}</p>
-      )}
       <Form className={styles.form}>
         <Form.Item label="Изображение" className={styles.image}>
           <Input
@@ -183,6 +175,18 @@ const UserProfile: FC = () => {
       </Form>
       <div className={styles.button}>
         <Button onClick={handleSubmit} text="Опубликовать" />
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </div>
     </div>
   );

@@ -4,24 +4,25 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Users } from '../interfaces/entities/Users';
 import { AuthDto } from '../interfaces/dto/auth.dto';
-import { CryptoConfig } from '../configs/crypto.config';
 import { UserRole } from '../interfaces/enums/role.enum';
+import { compare, genSalt, hash } from 'bcrypt';
 
 @Injectable()
 export class AuthService {
 	constructor(
 		@InjectRepository(Users) private readonly usersRepository: Repository<Users>,
 		private readonly jwtService: JwtService,
-		private readonly cryptoService: CryptoConfig,
 	) {}
 
 	public async createUser(createUserDto: AuthDto): Promise<Users> {
-		const encrypted = this.cryptoService.encrypt(createUserDto.password);
+		const salt = await genSalt(10);
+		const hashPassword = await hash(createUserDto.password, salt);
+
 		return await this.usersRepository.save({
 			firstName: createUserDto.firstName,
 			lastName: createUserDto.lastName,
 			email: createUserDto.email,
-			password: encrypted,
+			password: hashPassword,
 		});
 	}
 
@@ -32,11 +33,12 @@ export class AuthService {
 	public async validateUser(email: string, password: string): Promise<{ email: string; role: UserRole }> {
 		const user = await this.findUser(email);
 		if (!user) {
-			throw new UnauthorizedException('User not found');
+			throw new UnauthorizedException('Пользователь не найден.');
 		}
-		const decrypted = this.cryptoService.decrypt(password);
-		if (!decrypted) {
-			throw new UnauthorizedException('Password is incorrect');
+
+		const decryptedPassword = await compare(password, user.password);
+		if (!decryptedPassword) {
+			throw new UnauthorizedException('Пароль некорректный!');
 		}
 		return { email: user.email, role: user.role };
 	}

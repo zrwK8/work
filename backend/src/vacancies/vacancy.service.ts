@@ -17,8 +17,8 @@ export class VacancyService {
 		return await this.vacanciesRepository.find();
 	}
 
-	public async getVacancy(id: number): Promise<Vacancies> {
-		return await this.vacanciesRepository.findOneBy({ id });
+	public async getVacancy(nameSurname: string, age: number): Promise<Vacancies> {
+		return await this.vacanciesRepository.findOneBy({ nameSurname: nameSurname, age: age });
 	}
 
 	public async subscribeToVacancies(email: string): Promise<Emails> {
@@ -30,14 +30,6 @@ export class VacancyService {
 	}
 
 	public async createVacancy(vacancy: CreateVacancyDto) {
-		const vacancies = await this.vacanciesRepository.findOneBy({
-			nameSurname: vacancy.nameSurname,
-			age: vacancy.age,
-			position: vacancy.position,
-		});
-		if (vacancies) {
-			throw new BadRequestException();
-		}
 		return await this.vacanciesRepository.save({ ...vacancy });
 	}
 

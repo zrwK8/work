@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { CryptoConfig } from '../configs/crypto.config';
 import { JWTConfig } from '../configs/jwt.config';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
@@ -19,7 +18,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 			imports: [ConfigModule],
 		}),
 	],
-	providers: [AuthService, CryptoConfig, JwtStrategy, ConfigService],
+	providers: [AuthService, JwtStrategy, ConfigService],
 	controllers: [AuthController],
 })
 export class AuthModule {}

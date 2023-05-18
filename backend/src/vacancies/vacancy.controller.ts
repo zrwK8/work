@@ -9,7 +9,6 @@ import {
 	Post,
 	UseGuards,
 	UsePipes,
-	ValidationPipe,
 } from '@nestjs/common';
 import { VacancyService } from './vacancy.service';
 import { CreateVacancyDto, UpdateVacancyDto } from '../interfaces/dto/vacancies.dto';
@@ -20,6 +19,7 @@ import { JwtAuthGuard } from '../guards/jwt.guard';
 import { RolesGuard } from '../guards/roles.guard';
 import { Roles } from '../decorators/roles.decorator';
 import { UserRole } from '../interfaces/enums/role.enum';
+import { EmailValidationPipe } from '../pipes/email.validation.pipe';
 
 @Controller('vacancies')
 export class VacancyController {
@@ -34,20 +34,20 @@ export class VacancyController {
 		}
 	}
 
-	@Get('/:id')
-	public async getVacancy(@Param('id') id: number): Promise<Vacancies> {
-		return await this.vacancyService.getVacancy(id);
+	@Get('/get-vacancy')
+	public async getVacancy(@Body() nameSurname: string, @Body() age: number): Promise<Vacancies> {
+		return await this.vacancyService.getVacancy(nameSurname, age);
 	}
 
 	@Post('/subscribe')
-	@UsePipes(new ValidationPipe())
+	@UsePipes(new EmailValidationPipe())
 	public async subscribeToVacancies(@Body() { email }: EmailDto) {
 		try {
-			const subscribed = await this.vacancyService.subscribeToVacancies(email);
+			await this.vacancyService.subscribeToVacancies(email);
 			return {
 				statusCode: 200,
 				message: 'Вы успешно подписались на рассылку. Спасибо!',
-				data: subscribed,
+				data: null,
 				error: null,
 			};
 		} catch (error) {
@@ -60,15 +60,20 @@ export class VacancyController {
 	@Roles(UserRole.Superadmin, UserRole.Admin, UserRole.Employer, UserRole.User)
 	public async createVacancy(@Body() vacanciesDto: CreateVacancyDto) {
 		try {
-			const vacancies = await this.vacancyService.createVacancy(vacanciesDto);
+			const vacancyExists = await this.vacancyService.getVacancy(vacanciesDto.nameSurname, vacanciesDto.age);
+			if (vacancyExists) {
+				throw new BadRequestException('Вы уже оставили свой резюмие.');
+			}
+			const vacancy = await this.vacancyService.createVacancy(vacanciesDto);
+
 			return {
 				statusCode: 201,
 				message: 'Вы оставили свою вакансию на сайте. Спасибо!',
-				data: vacancies,
+				data: vacancy,
 				error: null,
 			};
 		} catch (error) {
-			throw new BadRequestException('Что-то пошло не так. Проверьте правильность полей.');
+			throw new BadRequestException('Что-то пошло не так. Проверьте правильность введённых данных.');
 		}
 	}
 
