@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Footer from "../../widgets/Layout/Footer";
-import LoginForm from "../../components/auth/Login";
 import Logo from "../../widgets/Logo";
+import LoginForm from "../../features/auth/Login";
 
 const Login: FC = () => {
   return (

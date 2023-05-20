@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const NewsSubscribe: FC = () => {
-  const [email, setEmail] = useState<string>(" ");
+  const [email, setEmail] = useState<string>("");
 
   const handleSubmit = (event: any) => {
     event.preventDefault();

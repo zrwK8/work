@@ -6,14 +6,15 @@ import Button from "../../../shared/ui/Button";
 import Tags from "../../../shared/ui/Tags/Tags";
 import axios from "axios";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
-import CountrySelector from "../../CountrySelector";
 import { ToastContainer, toast } from "react-toastify";
+import CountrySelector from "../../../widgets/CountrySelector";
 
 interface BodyData {
   image: string;
   nameSurname: string;
   position: string;
   age: number | null;
+  email: string;
   salary: number | null;
   workExperience: number;
   country: string;
@@ -29,6 +30,7 @@ const UserProfile: FC = () => {
     nameSurname: "",
     position: "",
     age: null,
+    email: "",
     salary: null,
     workExperience: 0,
     country: "",
@@ -46,6 +48,7 @@ const UserProfile: FC = () => {
       nameSurname: body.nameSurname,
       position: body.position,
       age: body.age,
+      email:  body.email,
       salary: body.salary,
       workExperience: body.workExperience,
       country: body.country,
@@ -86,6 +89,15 @@ const UserProfile: FC = () => {
             value={body.nameSurname}
             onChange={(event) =>
               setBody({ ...body, nameSurname: event.target.value })
+            }
+          />
+        </Form.Item>
+        <Form.Item className={styles.email} label="Почта">
+          <Input
+            className={styles.input}
+            value={body.email}
+            onChange={(event) =>
+              setBody({ ...body, email: event.target.value })
             }
           />
         </Form.Item>

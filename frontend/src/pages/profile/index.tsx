@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Footer from "../../widgets/Layout/Footer";
-import UserProfile from "../../components/profile/UserProfile";
 import Header from "../../widgets/Layout/Header";
+import UserProfile from "../../features/profile/UserProfile";
 
 const Profile: FC = () => {
   return (

@@ -1,11 +1,13 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import styles from "./index.module.scss";
+import { Modal } from "antd";
 
 export interface EmployeeCardProps {
   id: number;
   image: string;
   nameSurname: string;
   age: number;
+  email: string;
   position: string;
   workType: string[];
   workExperience: number;
@@ -22,6 +24,7 @@ const EmployeeCard: FC<EmployeeCardProps> = (props) => {
     image,
     nameSurname,
     age,
+    email,
     position,
     workType,
     workExperience,
@@ -31,6 +34,7 @@ const EmployeeCard: FC<EmployeeCardProps> = (props) => {
     salary,
     skills,
   } = props;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className={styles.card}>
@@ -66,9 +70,17 @@ const EmployeeCard: FC<EmployeeCardProps> = (props) => {
         <div className={styles.salary}>
           <p>
             ${salary}
-            <span>/month</span>
+            <span>/месяц</span>
           </p>
-          <button>Apply Now</button>
+          <button onClick={() => setIsModalOpen(true)}>Email address</button>
+          <Modal
+            title="Связь с кандидатом"
+            open={isModalOpen}
+            onOk={() => setIsModalOpen(false)}
+            onCancel={() => setIsModalOpen(false)}
+          >
+            <p>Почта: {email}</p>
+          </Modal>
         </div>
       </div>
     </div>

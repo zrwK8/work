@@ -15,6 +15,9 @@ export class Vacancies extends BaseEntity {
 	age: number;
 
 	@Column()
+	email: string;
+
+	@Column()
 	position: string;
 
 	@Column()
