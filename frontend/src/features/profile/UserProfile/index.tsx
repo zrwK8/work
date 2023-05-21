@@ -48,7 +48,7 @@ const UserProfile: FC = () => {
       nameSurname: body.nameSurname,
       position: body.position,
       age: body.age,
-      email:  body.email,
+      email: body.email,
       salary: body.salary,
       workExperience: body.workExperience,
       country: body.country,
@@ -187,19 +187,22 @@ const UserProfile: FC = () => {
       </Form>
       <div className={styles.button}>
         <Button onClick={handleSubmit} text="Опубликовать" />
-        <ToastContainer
-          position="bottom-right"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
       </div>
+      <p className={styles.policy}>
+        Отправляя данную форму вы соглашаетесь с политикой конфиденциальности.
+      </p>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

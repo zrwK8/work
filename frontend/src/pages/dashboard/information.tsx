@@ -1,16 +1,16 @@
 import { FC } from "react";
 import Header from "../../widgets/Layout/Header";
 import Footer from "../../widgets/Layout/Footer";
-import AdminPanel from "../../features/profile/AdminPanel";
+import Info from "../../features/profile/Dashboard/Information";
 
-const Dashboard: FC = () => {
+const Information: FC = () => {
   return (
     <>
       <Header />
-      <AdminPanel />
+      <Info />
       <Footer />
     </>
   );
 };
 
-export default Dashboard;
+export default Information;

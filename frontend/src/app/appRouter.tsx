@@ -5,7 +5,9 @@ import Login from "../pages/login";
 import Register from "../pages/register";
 import Profile from "../pages/profile";
 import { HomeRedirect, LoginRedirect } from "./protectedRoutes";
-import Dashboard from "../pages/dashboard";
+import Information from "../pages/dashboard/information";
+import Vacancies from "../pages/dashboard/vacancies";
+import Users from "../pages/dashboard/users";
 
 export const appRouter = createBrowserRouter([
   {
@@ -39,30 +41,27 @@ export const appRouter = createBrowserRouter([
           </LoginRedirect>
         ),
       },
-
       {
         path: "/dashboard",
         element: (
           <LoginRedirect>
-            <Dashboard />
+            <Information />
           </LoginRedirect>
         ),
       },
-
       {
         path: "/dashboard/users",
         element: (
           <LoginRedirect>
-            <Dashboard />
+            <Users />
           </LoginRedirect>
         ),
       },
-
       {
         path: "/dashboard/vacancies",
         element: (
           <LoginRedirect>
-            <Dashboard />
+            <Vacancies />
           </LoginRedirect>
         ),
       },
